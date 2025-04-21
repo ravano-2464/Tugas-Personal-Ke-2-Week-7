@@ -63,22 +63,18 @@ class MahasiswaLinkedList {
         this.size = 0;
     }
     
-    // Method untuk mendapatkan jumlah elemen dalam list
     public int size() {
         return size;
     }
     
-    // Method untuk mengecek apakah list penuh
     public boolean isFull() {
         return size >= MAX_SIZE;
     }
     
-    // Method untuk mengecek apakah list kosong
     public boolean isEmpty() {
         return head == null;
     }
     
-    // Method untuk menambahkan data mahasiswa (push)
     public boolean push(Mahasiswa mhs) {
         if (isFull()) {
             System.out.println("\nMaaf, database sudah penuh (maksimal 5 data)");
@@ -87,11 +83,9 @@ class MahasiswaLinkedList {
         
         Node newNode = new Node(mhs);
         
-        // Jika list kosong
         if (head == null) {
             head = newNode;
         } else {
-            // Tambahkan node baru di akhir list
             Node current = head;
             while (current.next != null) {
                 current = current.next;
@@ -103,30 +97,27 @@ class MahasiswaLinkedList {
         return true;
     }
     
-    // Method untuk menghapus semua data (pop all)
     public void popAll() {
         head = null;
         size = 0;
-        System.out.println("\nSemua data mahasiswa berhasil dihapus");
+        System.out.println("\nSemua data mahasiswa berhasil dihapus!");
     }
     
-    // Method untuk menampilkan semua data mahasiswa (diurutkan berdasarkan NIM)
     public void displaySorted() {
         if (isEmpty()) {
             System.out.println("\nDatabase mahasiswa kosong");
             return;
         }
         
-        // Sorting menggunakan Bubble Sort
+        // Bubble Sort
         for (int i = 0; i < size - 1; i++) {
             Node current = head;
-            Node index = null;
+            Node index;
             
             while (current.next != null) {
                 index = current.next;
                 
                 if (current.data.getNim().compareTo(index.data.getNim()) > 0) {
-                    // Swap data
                     Mahasiswa temp = current.data;
                     current.data = index.data;
                     index.data = temp;
@@ -136,9 +127,9 @@ class MahasiswaLinkedList {
             }
         }
         
-        // Tampilkan data yang sudah diurutkan
+        // Tampilan Data Mahasiswa
         System.out.println("\nData Mahasiswa (diurutkan berdasarkan NIM):");
-        System.out.println("===========================================================");
+        System.out.println("\n===========================================================");
         System.out.printf("%-10s | %-30s | %-50s\n", "NIM", "NAMA", "JURUSAN");
         System.out.println("-----------------------------------------------------------");
         
@@ -162,6 +153,12 @@ public class DatabaseMahasiswa {
         MahasiswaLinkedList database = new MahasiswaLinkedList();
         int pilihan;
         
+        // Tampilan animasi kredit
+        typewriter("=================================", 30);
+        typewriter("   Made By Ravano Akbar Widodo", 30);
+        typewriter("=================================", 30);
+
+        
         do {
             tampilkanMenu();
             System.out.print("\nPilihan Anda: ");
@@ -178,20 +175,33 @@ public class DatabaseMahasiswa {
                     database.popAll();
                     break;
                 case 4:
-                    System.out.println("\nTerima kasih telah menggunakan program ini!");
+                    typewriter("\nTerima kasih telah menggunakan program ini!", 30);
+                    typewriter("\nMade By Ravano Akbar Widodo", 30);
                     break;
                 default:
                     System.out.println("\nPilihan tidak valid. Silakan coba lagi.");
             }
             
-            System.out.println(); // Baris kosong untuk spasi agar mudah dibaca
+            System.out.println(); // Baris kosong untuk spasi
             pressEnterToContinue();
         } while (pilihan != 4);
         
         scanner.close();
     }
     
-    // Method untuk menampilkan menu
+    // Animasi ketik
+    private static void typewriter(String text, int delay) {
+        for (char ch : text.toCharArray()) {
+            System.out.print(ch);
+            try {
+                Thread.sleep(delay);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        System.out.println();
+    }
+    
     private static void tampilkanMenu() {
         System.out.println("\n=== DATABASE MAHASISWA ===");
         System.out.println("1. Push Data Mahasiswa");
@@ -199,9 +209,9 @@ public class DatabaseMahasiswa {
         System.out.println("3. Pop Semua Data Mahasiswa");
         System.out.println("4. Keluar");
         System.out.println("=========================");
+        typewriter("\nMade By Ravano Akbar Widodo", 30);
     }
     
-    // Method untuk input data mahasiswa
     private static void pushData(MahasiswaLinkedList database) {
         if (database.isFull()) {
             System.out.println("\nDatabase sudah penuh (maksimal 5 data)");
@@ -210,7 +220,6 @@ public class DatabaseMahasiswa {
         
         System.out.println("\n=== INPUT DATA MAHASISWA ===");
         
-        // Input NIM
         String nim;
         do {
             System.out.print("\nMasukkan NIM (maksimal 10 digit): ");
@@ -220,7 +229,6 @@ public class DatabaseMahasiswa {
             }
         } while (nim.length() > 10);
         
-        // Input Nama
         String nama;
         do {
             System.out.print("\nMasukkan Nama (maksimal 30 karakter): ");
@@ -230,7 +238,6 @@ public class DatabaseMahasiswa {
             }
         } while (nama.length() > 30);
         
-        // Input Jurusan
         String jurusan;
         do {
             System.out.print("\nMasukkan Jurusan (maksimal 50 karakter): ");
@@ -240,14 +247,12 @@ public class DatabaseMahasiswa {
             }
         } while (jurusan.length() > 50);
         
-        // Buat objek Mahasiswa dan tambahkan ke database
         Mahasiswa mhs = new Mahasiswa(nim, nama, jurusan);
         if (database.push(mhs)) {
-            System.out.println("\nData mahasiswa berhasil ditambahkan");
+            System.out.println("\nData mahasiswa berhasil ditambahkan!");
         }
     }
     
-    // Method untuk memastikan input integer yang valid
     private static int getIntInput() {
         int input = 0;
         boolean valid = false;
@@ -264,7 +269,6 @@ public class DatabaseMahasiswa {
         return input;
     }
     
-    // Method untuk pause program hingga user menekan Enter
     private static void pressEnterToContinue() {
         System.out.print("\nTekan ENTER untuk melanjutkan...");
         scanner.nextLine();
