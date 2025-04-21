@@ -154,9 +154,9 @@ public class DatabaseMahasiswa {
         int pilihan;
         
         // Tampilan animasi kredit
-        typewriter("=================================", 30);
+        System.out.println("=================================");
         typewriter("   Made By Ravano Akbar Widodo", 30);
-        typewriter("=================================", 30);
+        System.out.println("=================================");
 
         
         do {
